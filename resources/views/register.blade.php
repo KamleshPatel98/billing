@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="{{ asset('assets/alert/alertify.css') }}"/>
     <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{ asset('assets/alert/alertify_theme.css') }}"/>
     <!-- JavaScript -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script src="{{ asset('assets/alert/alertify.js') }}"></script>
 </head>
 <body class="hold-transition register-page">
     <div class="register-box">
@@ -32,10 +32,10 @@
         <div class="card-body register-card-body">
           <p class="login-box-msg">Register a new membership</p>
 
-          <form action="{{ register }}" method="POST">
+          <form action="{{ route('register') }}" method="POST">
             @csrf
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="username" placeholder="Full name">
+              <input type="text" class="form-control" name="name" placeholder="Full name">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
@@ -43,7 +43,7 @@
               </div>
             </div>
             <div class="input-group mb-3">
-              <input type="email" class="form-control" name="user_email" placeholder="Email">
+              <input type="email" class="form-control" name="email" placeholder="Email">
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>
@@ -95,7 +95,7 @@
             </a>
           </div>
 
-          <a href="login.html" class="text-center">I already have a membership</a>
+          <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
         </div>
         <!-- /.form-box -->
       </div><!-- /.card -->
