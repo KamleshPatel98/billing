@@ -14,9 +14,11 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th>SN.</th>
-                                        <th>category Name</th>
-                                        <th>Item Name</th>
-                                        <th>Item Price</th>
+                                        <th>Category Name</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -26,6 +28,8 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->category->category_name }}</td>
                                             <td>{{ $row->item_name }}</td>
+                                            <td>{{ $row->item_qty }}</td>
+                                            <td>{{ $row->item_status=='1' ? 'Active' : 'Inactive'  }}</td>
                                             <td>{{ $row->item_price }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
@@ -87,6 +91,17 @@
                             <div class="mt-1">
                                 <lable class="form-label">Item Price <span class="text-danger">*</span></lable>
                                 <input type="number" name="item_price"  value="{{ isset($edit) ? $item->item_price : '' }}" class="form-control">
+                            </div>
+                            <div class="mt-1">
+                                <lable class="form-label">Item Qty <span class="text-danger">*</span></lable>
+                                <input type="number" name="item_qty"  value="{{ isset($edit) ? $item->item_qty : '' }}" class="form-control">
+                            </div>
+                            <div class="mt-1">
+                                <lable class="form-label">Item Status</lable>
+                                <select name="item_status" id="" class="form-control">
+                                    <option value="1" {{ isset($edit) ? $item->item_status == '1' ? 'selected' : '' : ''}}>Active</option>
+                                    <option value="0" {{ isset($edit) ? $item->item_status == '0' ? 'selected' : '' : ''}}>Inactive</option>
+                                </select>
                             </div>
                             <div class="mt-3 text-center">
                                 <button class=" col-4 btn btn-sm btn-primary" type="submit">Submit</button>
