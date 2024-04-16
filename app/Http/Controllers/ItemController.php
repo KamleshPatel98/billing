@@ -36,13 +36,16 @@ class ItemController extends Controller
             return back()->with('error','Category In Item Is Already Exists!');
         }else{
             $request->validate(['item_name'=>'required|max:70',
-            'category_id'=>'required|exists:categories,id',
-            'item_price'=>'required|max:20']);
+                'category_id'=>'required|exists:categories,id',
+                'item_price'=>'required|max:20',
+                'item_qty'=>'required|max:11',
+                'item_status'=>'nullable|max:1'
+            ]);
             try {
                 Item::create($request->except('_token'));
                 return back()->with('success','Item Added Successfully!');
             } catch (\Exception $ex) {
-                return $ex;
+                //return $ex;
                 return back()->with('error','Item Is Not Added!');
             }
         }
@@ -78,13 +81,15 @@ class ItemController extends Controller
             return back()->with('error','Category In Item Is Already Exists!');
         }else{
             $request->validate(['item_name'=>'required|max:70',
-            'category_id'=>'required|exists:categories,id',
-            'item_price'=>'required|max:20']);
+                'category_id'=>'required|exists:categories,id',
+                'item_price'=>'required|max:20',
+                'item_qty'=>'required|max:11',
+                'item_status'=>'nullable|max:1']);
             try {
-                Item::create($request->except('_token'));
+                Item::find($item->id)->update($request->except('_token'));
                 return back()->with('success','Item Updated Successfully!');
             } catch (\Exception $ex) {
-                return $ex;
+                //return $ex;
                 return back()->with('error','Item Is Not Updated!');
             }
         }
