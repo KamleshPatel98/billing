@@ -16,7 +16,9 @@ return new class extends Migration
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('item_name',70);
-            $table->string('item_price',10);
+            $table->integer('item_price');
+            $table->integer('item_qty');
+            $table->tinyInteger('item_status')->default(0)->comment('0 => inactive, 1 => active');
             $table->timestamps();
         });
     }
