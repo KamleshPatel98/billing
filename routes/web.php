@@ -7,6 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\PartyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,5 +28,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('category',CategoryController::class);
     Route::resource('item',ItemController::class);
     Route::resource('unit',UnitController::class);
-    
+    Route::resource('party',PartyController::class);
 });
