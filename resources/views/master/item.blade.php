@@ -28,9 +28,9 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $row->category->category_name }}</td>
                                             <td>{{ $row->item_name }}</td>
+                                            <td>{{ $row->item_price }}</td>
                                             <td>{{ $row->item_qty }}</td>
                                             <td>{{ $row->item_status=='1' ? 'Active' : 'Inactive'  }}</td>
-                                            <td>{{ $row->item_price }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <div class="mr-2">
