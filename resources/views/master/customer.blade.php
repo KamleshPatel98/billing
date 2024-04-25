@@ -107,7 +107,6 @@
                                     <lable class="form-label">Opening Balance<span class="text-danger">*</span></lable>
                                     <input type="number" name="opening_bal"  value="{{ isset($edit) ? $customer->opening_bal : '' }}" class="form-control">
                                 </div>
-                                <x-created_at></x-created_at>
                                 <div class="mt-3 text-center">
                                     <button class=" col-4 btn btn-sm btn-primary" type="submit">Submit</button>
                                     <button class=" col-4 btn btn-sm btn-danger" type="reset">Reset</button>
