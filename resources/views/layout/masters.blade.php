@@ -32,6 +32,9 @@
     <!-- JavaScript -->
     <script src="{{ asset('assets/alert/alertify.js') }}"></script>
 
+    <!-- Chosen CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/chosen/chosen.css') }}"/>
+
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -455,19 +458,16 @@
                       <p>Party Master</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="pages/forms/editors.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Editors</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/forms/validation.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Validation</p>
-                    </a>
-                  </li>
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('saleEntry.index') }}" class="nav-link">
+                  <i class="nav-icon fas fa-table"></i>
+                  <p>
+                    Sale
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link">
@@ -986,6 +986,13 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
     <!-- Page specific script -->
+
+    <!-- Chosen js -->
+    <script src="{{ asset('assets/chosen/chosen.js') }}"></script>
+    <script>
+        $(".chosen").chosen();
+    </script>
+
     <script>
       $(function () {
         $(".example1").DataTable({
