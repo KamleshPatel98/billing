@@ -9,6 +9,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\SaleEntryController;
+use App\Http\Controllers\SaleItemEntryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,4 +32,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('unit',UnitController::class);
     Route::resource('party',PartyController::class);
     Route::resource('saleEntry',SaleEntryController::class);
+    Route::get('addSaleEntry',[SaleEntryController::class,'addSaleEntry'])->name('addSaleEntry');
+    Route::resource('saleItemEntry',SaleItemEntryController::class);
+    Route::get('storeSaleLowerEntry',[SaleItemEntryController::class,'storeSaleLowerEntry'])->name('storeSaleLowerEntry');
+    
 });
