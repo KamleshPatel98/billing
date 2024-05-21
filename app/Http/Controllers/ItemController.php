@@ -75,11 +75,11 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $exist=Item::where('item_name',$request['item_name'])->where('category_id',$request['category_id'])
-            ->where('item_price',$request['item_price'])->count();
-        if($exist>0){
-            return back()->with('error','Category In Item Is Already Exists!');
-        }else{
+        // $exist=Item::where('item_name',$request['item_name'])->where('category_id',$request['category_id'])
+        //     ->where('item_price',$request['item_price'])->count();
+        // if($exist>0){
+        //     return back()->with('error','Category In Item Is Already Exists!');
+        // }else{
             $request->validate(['item_name'=>'required|max:70',
                 'category_id'=>'required|exists:categories,id',
                 'item_price'=>'required|max:20',
@@ -92,7 +92,7 @@ class ItemController extends Controller
                 //return $ex;
                 return back()->with('error','Item Is Not Updated!');
             }
-        }
+        //}
     }
 
     /**
