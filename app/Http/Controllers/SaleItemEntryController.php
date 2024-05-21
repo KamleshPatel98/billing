@@ -59,11 +59,9 @@ class SaleItemEntryController extends Controller
     public function storeSaleLowerEntry(Request $request)
     {  
         try{
-            //return $request['item_id'];
             SaleItemEntry::create($request->all());
             return 200;
         }catch(\Exception $ex){
-            //return 500;
             return $ex;
         }
     }
