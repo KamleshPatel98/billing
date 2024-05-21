@@ -461,13 +461,33 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a href="{{ route('saleEntry.index') }}" class="nav-link">
-                  <i class="nav-icon fas fa-table"></i>
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
                   <p>
                     Sale
                     <i class="fas fa-angle-left right"></i>
                   </p>
                 </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('saleEntry.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-table"></i>
+                      <p>
+                        Sale Entry
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('saleEntry.saleEntryDetails') }}" class="nav-link">
+                      <i class="nav-icon fas fa-table"></i>
+                      <p>
+                        Sale Details
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link">
