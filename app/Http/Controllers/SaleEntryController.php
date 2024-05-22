@@ -33,13 +33,12 @@ class SaleEntryController extends Controller
         $sale_entries=DB::table('sale_entries')
             ->join('sale_item_entries','sale_entries.bill_no','sale_item_entries.bill_no')
             ->join('customers','sale_item_entries.customer_id','customers.id')
-            ->join('items','sale_item_entries.item_id','items.id')
-            ->join('units','sale_item_entries.unit_id','units.id')
             ->select('sale_entries.sale_date as sale_date',
-                'sale_item_entries.qty as qty','sale_item_entries.totalPrice as totalPrice','sale_item_entries.price as price',
+                'sale_item_entries.totalPrice as totalPrice',
                 'sale_item_entries.bill_no as bill_no',
-                'customers.cust_name as cust_name','units.unit_name as unit_name','items.item_name as item_name')
-            ->paginate(5);
+                'customers.cust_name as cust_name')
+            ->groupBy('sale_item_entries.bill_no')         
+            ->paginate(10);
         return view('sale.saleEntryDetails',compact('sale_entries'));
     }
 
