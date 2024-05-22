@@ -39,5 +39,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('storeSaleLowerEntry',[SaleItemEntryController::class,'storeSaleLowerEntry'])->name('storeSaleLowerEntry');
     
     //Invoice
-    Route::get('sale_invoice',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
+    Route::get('sale_invoice/{bill_no}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
 });
