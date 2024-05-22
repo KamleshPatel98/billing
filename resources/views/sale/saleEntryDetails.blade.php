@@ -14,11 +14,7 @@
                                 <th>SNo.</th>
                                 <th>Customer</th>
                                 <th>Sale Date</th>
-                                <th>Item</th>
-                                <th>Unit</th>
-                                <th>Price</th>
-                                <th>Qty</th>
-                                <th>Amount</th>
+                                <th>TotalAmount</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -28,10 +24,6 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->cust_name }}</td>
                                     <td>{{ $row->sale_date }}</td>
-                                    <td>{{ $row->item_name }}</td>
-                                    <td>{{ $row->unit_name }}</td>
-                                    <td>{{ $row->price }}</td>
-                                    <td>{{ $row->qty }}</td>
                                     <td>{{ $row->totalPrice }}</td>
                                     <td>
                                         <a href="{{ route('invoice.sale_invoice',$row->bill_no) }}" class="btn btn-sm btn-secondary">View</a>
