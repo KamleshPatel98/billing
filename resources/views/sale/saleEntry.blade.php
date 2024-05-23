@@ -17,7 +17,7 @@
                         <input type="number"  id="bill_no" value="{{ $billNo }}" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
-                        <label for="" class="form-label">Customer</label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br><br> 
+                        <label for="" class="form-label">Customer</label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
                         <select  id="customer_id" class="form-control chosen" style="height:20px;">
                             <option value="">Select</option>
                             @foreach ($customers as $row)
@@ -99,7 +99,6 @@
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="btn btn-sm btn-danger" type="reset">Reset</button>
             <button class="btn btn-sm btn-primary" type="submit" onclick="addSaleEntry();">Submit</button>
         </div>
     </div>
@@ -152,6 +151,7 @@
                 }
             });
         }
+        getData();
 
         function addSaleEntry(){
             var sale_date=$('#sale_date').val();
