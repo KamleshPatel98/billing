@@ -17,7 +17,7 @@
                         <input type="number"  id="bill_no" value="{{ $billNo }}" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
-                        <label for="" class="form-label">Customer</label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
+                        <label for="" class="form-label">Customer <span class="text-danger">*</span></label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
                         <select  id="customer_id" class="form-control chosen" style="height:20px;">
                             <option value="">Select</option>
                             @foreach ($customers as $row)
@@ -36,7 +36,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <label for="" class="form-label">Item</label> <a href="{{ route('item.create') }}" class="p-1">+</a><br>
+                        <label for="" class="form-label">Item  <span class="text-danger">*</span></label> <a href="{{ route('item.create') }}" class="p-1">+</a><br>
                         <select  id="item_id" class="form-control chosen" style="height:20px;" >
                             <option value="">Select</option>
                             @foreach ($items as $row)
@@ -45,7 +45,7 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="" class="form-label">Unit</label> <a href="{{ route('unit.create') }}" class="p-1">+</a><br>
+                        <label for="" class="form-label">Unit <span class="text-danger">*</span></label>   <a href="{{ route('unit.create') }}" class="p-1">+</a><br>
                         <select  id="unit_id" class="form-control chosen" style="height:20px;" >
                             <option value="">Select</option>
                             @foreach ($units as $row)
@@ -54,15 +54,15 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="" class="form-label">Price</label><br>
+                        <label for="" class="form-label">Price <span class="text-danger">*</span></label><br>
                         <input type="number"  id="price" value=""  class="form-control">
                     </div>
                     <div class="col-md-2">
-                        <label for="" class="form-label">Qty</label><br>
+                        <label for="" class="form-label">Qty <span class="text-danger">*</span></label><br>
                         <input type="number"  id="qty" value=""  class="form-control" onclick="getQty();">
                     </div>
                     <div class="col-md-2">
-                        <label for="" class="form-label">Amount</label><br>
+                        <label for="" class="form-label">Amount <span class="text-danger">*</span></label><br>
                         <input type="number"  id="totalPrice" value="" class="form-control">
                     </div>
                     <div class="col-md-2">
@@ -121,6 +121,10 @@
             var price=$('#price').val();
             var qty=$('#qty').val();
             var totalPrice=$('#totalPrice').val();
+            if(item_id=='' || customer_id=='' || bill_no=='' || unit_id=='' || price=='' || qty=='' || totalPrice==''){
+                alert('All field is required!');
+                return false;
+            }
 
             $.ajax({
                 type: "GET",
