@@ -37,6 +37,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('saleEntryDetails',[SaleEntryController::class,'saleEntryDetails'])->name('saleEntry.saleEntryDetails');
     Route::resource('saleItemEntry',SaleItemEntryController::class);
     Route::get('storeSaleLowerEntry',[SaleItemEntryController::class,'storeSaleLowerEntry'])->name('storeSaleLowerEntry');
+    Route::get('editItem',[SaleItemEntryController::class,'editItem'])->name('saleItemEntry.editItem');
+    Route::get('updateItem',[SaleItemEntryController::class,'updateItem'])->name('saleItemEntry.updateItem');
+    Route::get('deleteItem',[SaleItemEntryController::class,'deleteItem'])->name('saleItemEntry.deleteItem');
     
     //Invoice
     Route::get('sale_invoice/{bill_no}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
