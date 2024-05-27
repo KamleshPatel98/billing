@@ -65,9 +65,10 @@
                         <label for="" class="form-label">Amount <span class="text-danger">*</span></label><br>
                         <input type="number"  id="totalPrice" value="" class="form-control">
                     </div>
+                    <input type="hidden" id="id">
                     <div class="col-md-2">
                         <label for="" class="form-label">Action</label><br>
-                        <button class="btn btn-sm btn-primary" onclick="addItem();">Add</button>
+                        <button class="btn btn-sm btn-primary"   onclick="addItem();">Add</button>
                     </div>
                 </div>
             </div>
@@ -114,6 +115,7 @@
         }
 
         function addItem(){
+            var id=$('#id').val();
             var item_id=$('#item_id').val();
             var customer_id=$('#customer_id').val();
             var bill_no=$('#bill_no').val();
@@ -125,8 +127,37 @@
                 alert('All field is required!');
                 return false;
             }
-
-            $.ajax({
+            if(id != ''){
+                //update item
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('saleItemEntry.updateItem') }}",
+                    data:  {
+                        'id':id,'item_id':item_id,'customer_id':customer_id,'bill_no':bill_no,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
+                    },
+                dataType: "json",
+                    success: function (response) {
+                        if(response==200){
+                            getData();
+                            // $('#item_id').html('');
+                            // $('#customer_id').html('');
+                            // $('#bill_no').html('');
+                            // $('#unit_id').html('');
+                            $('#price').val('');
+                            $('#qty').val('');
+                            $('#totalPrice').val('');
+                            $('#id').val('');
+                            alertify.set('notifier','position', 'top-right');
+                            alertify.success('Item Updated Successfully!');
+                        }else{
+                            alertify.set('notifier','position', 'top-right');
+                            alertify.error('Item Is Not Updated!');
+                        }
+                    }
+                });
+            }else{
+                //add item
+                $.ajax({
                 type: "GET",
                 url: "{{ route('storeSaleLowerEntry') }}",
                 data: {
@@ -136,6 +167,14 @@
                 success: function (response) {
                     if(response==200){
                         getData();
+                        // $('#item_id').html('');
+                        // $('#customer_id').html('');
+                        // $('#bill_no').html('');
+                        // $('#unit_id').html('');
+                        $('#price').val('');
+                        $('#qty').val('');
+                        $('#totalPrice').val('');
+                        $('#id').val('');
                         alertify.set('notifier','position', 'top-right');
                         alertify.success('Item Added Successfully!');
                     }else{
@@ -144,6 +183,7 @@
                     }
                 }
             });
+            }
         }
 
         function getData(){
@@ -181,5 +221,57 @@
                 }
             });
         }
+
+        //Edit Item
+        $(document).on('click','.edit',function(){
+            var id = $(this).val();
+            alert(id);
+            $.ajax({
+                type: "GET",
+                url: "{{ route('saleItemEntry.editItem') }}",
+                data: {
+                    'id':id,
+                },
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    $.each(response, function (key, value) { 
+                        $('#id').val(value['id']);
+                        $('#item_id').val(value['item_id']);
+                        $('#customer_id').val(value['customer_id']);
+                        $('#bill_no').val(value['bill_no']);
+                        $('#unit_id').val(value['unit_id']);
+                        $('#price').val(value['price']);
+                        $('#qty').val(value['qty']);
+                        $('#totalPrice').val(value['totalPrice']);
+                    });
+                    // $('#price').val('');
+                    // $('#price').val(response.price);
+                }
+            });
+        })
+
+        //delete Item
+        $(document).on('click','.delete',function(){
+            var id = $(this).val();
+            $.ajax({
+                type: "GET",
+                url: "{{ route('saleItemEntry.deleteItem') }}",
+                data: {
+                    'id':id,
+                },
+                dataType: "html",
+                success: function (response) {
+                    if(response==200){
+                        getData();
+                        alertify.set('notifier','position', 'top-right');
+                        alertify.success('Item Deleted Successfully!');
+                    }else{
+                        alertify.set('notifier','position', 'top-right');
+                        alertify.error('Item Is Not Deleted!');
+                    }
+                }
+            });
+        })
     </script>
 @endsection
