@@ -28,7 +28,16 @@ class SaleItemEntryController extends Controller
                     <td>'.$row->price.'</td>
                     <td>'.$row->qty.'</td>
                     <td>'.$row->totalPrice.'</td>
-                    <td>'.$row->id.'</td>
+                    <td> <div class="d-flex justify-content-center">
+                    <div class="mr-2">
+                        <button type="button" class="btn btn-sm btn-warning edit" value="'. $row->id .'">Edit</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-danger delete" value="'. $row->id .'">
+                            Delete
+                        </button>
+                    </div>
+                </div></td>
                 </tr>
             ';
             
@@ -77,24 +86,26 @@ class SaleItemEntryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SaleItemEntry $saleItemEntry)
+    public function editItem(Request $request)
     {
-        //
+        return $item=SaleItemEntry::where('id',$request['id'])->get();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SaleItemEntry $saleItemEntry)
+    public function updateItem(Request $request)
     {
-        //
+        SaleItemEntry::where('id',$request['id'])->update($request->except('id'));
+        return 200;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SaleItemEntry $saleItemEntry)
+    public function deleteItem(Request $request)
     {
-        //
+        SaleItemEntry::where('id',$request['id'])->delete();
+        return 200;
     }
 }
