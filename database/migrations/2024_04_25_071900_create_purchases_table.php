@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
+            $table->date('purchase_date');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->foreign('customer_id')->on('customers')->references('id')->onDelete('cascade');
+            $table->integer('bill_no');
             $table->timestamps();
         });
     }
