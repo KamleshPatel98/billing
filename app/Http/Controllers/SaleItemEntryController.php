@@ -14,7 +14,7 @@ class SaleItemEntryController extends Controller
      */
     public function index()
     {
-        $salesItems=SaleItemEntry::with('item','unit')->where('sale_item','0')->get();
+        $salesItems=SaleItemEntry::with('item','unit')->where('sale_id','0')->get();
         
         $html = '';
         
@@ -45,7 +45,7 @@ class SaleItemEntryController extends Controller
 
         
         //$grandtotal=0;
-        $grandTotal=SaleItemEntry::where('sale_item','0')->sum('totalPrice');
+        $grandTotal=SaleItemEntry::where('sale_id','0')->sum('totalPrice');
     
         $html .='
                 <tr>
