@@ -14,7 +14,7 @@
                                 <th>SNo.</th>
                                 <th>Customer</th>
                                 <th>Sale Date</th>
-                                <th>TotalAmount</th>
+                                <th>Sale id</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -23,10 +23,10 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->cust_name }}</td>
-                                    <td>{{ $row->sale_date }}</td>
-                                    <td>{{ $row->totalPrice }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->sale_date)->format('d-m-Y') }}</td>
+                                    <td>{{ $row->sale_id }}</td>
                                     <td>
-                                        <a href="{{ route('invoice.sale_invoice',$row->bill_no) }}" class="btn btn-sm btn-secondary">View</a>
+                                        <a href="{{ route('invoice.sale_invoice',$row->sale_id) }}" class="btn btn-sm btn-secondary">View</a>
                                     </td>
                                 </tr>
                             @endforeach
