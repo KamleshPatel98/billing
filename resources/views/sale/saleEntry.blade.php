@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Bill No.</label><br>
-                        <input type="number"  id="bill_no" value="{{ $billNo }}" readonly class="form-control">
+                        <input type="number"  id="sale_id" value="{{ $billNo }}" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Customer <span class="text-danger">*</span></label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label">Qty <span class="text-danger">*</span></label><br>
-                        <input type="number"  id="qty" value=""  class="form-control" onclick="getQty();">
+                        <input type="number"  id="qty" value=""  class="form-control" onchange="getQty();">
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label">Amount <span class="text-danger">*</span></label><br>
@@ -118,12 +118,12 @@
             var id=$('#id').val();
             var item_id=$('#item_id').val();
             var customer_id=$('#customer_id').val();
-            var bill_no=$('#bill_no').val();
+            var sale_id=$('#sale_id').val();
             var unit_id=$('#unit_id').val();
             var price=$('#price').val();
             var qty=$('#qty').val();
             var totalPrice=$('#totalPrice').val();
-            if(item_id=='' || customer_id=='' || bill_no=='' || unit_id=='' || price=='' || qty=='' || totalPrice==''){
+            if(item_id=='' || customer_id=='' || unit_id=='' || price=='' || qty=='' || totalPrice==''){
                 alert('All field is required!');
                 return false;
             }
@@ -133,7 +133,7 @@
                     type: "GET",
                     url: "{{ route('saleItemEntry.updateItem') }}",
                     data:  {
-                        'id':id,'item_id':item_id,'customer_id':customer_id,'bill_no':bill_no,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
+                        'id':id,'item_id':item_id,'sale_id':sale_id,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
                     },
                 dataType: "json",
                     success: function (response) {
@@ -141,7 +141,7 @@
                             getData();
                             // $('#item_id').html('');
                             // $('#customer_id').html('');
-                            // $('#bill_no').html('');
+                            // $('#sale_id').html('');
                             // $('#unit_id').html('');
                             $('#price').val('');
                             $('#qty').val('');
@@ -156,12 +156,12 @@
                     }
                 });
             }else{
-                //add item
+                //add lower table item
                 $.ajax({
                 type: "GET",
                 url: "{{ route('storeSaleLowerEntry') }}",
                 data: {
-                    'item_id':item_id,'customer_id':customer_id,'bill_no':bill_no,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
+                    'item_id':item_id,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
                 },
                 dataType: "json",
                 success: function (response) {
@@ -169,7 +169,7 @@
                         getData();
                         // $('#item_id').html('');
                         // $('#customer_id').html('');
-                        // $('#bill_no').html('');
+                        // $('#sale_id').html('');
                         // $('#unit_id').html('');
                         $('#price').val('');
                         $('#qty').val('');
@@ -200,13 +200,12 @@
         function addSaleEntry(){
             var sale_date=$('#sale_date').val();
             var customer_id=$('#customer_id').val();
-            var bill_no=$('#bill_no').val();
-
+            
             $.ajax({
                 type: "GET",
                 url: "{{ route('addSaleEntry') }}",
                 data: {
-                    'sale_date':sale_date,'customer_id':customer_id,'bill_no':bill_no,
+                    'sale_date':sale_date,'customer_id':customer_id,
                 },
                 dataType: "json",
                 success: function (response) {
@@ -239,7 +238,7 @@
                         $('#id').val(value['id']);
                         $('#item_id').val(value['item_id']);
                         $('#customer_id').val(value['customer_id']);
-                        $('#bill_no').val(value['bill_no']);
+                        $('#sale_id').val(value['sale_id']);
                         $('#unit_id').val(value['unit_id']);
                         $('#price').val(value['price']);
                         $('#qty').val(value['qty']);
