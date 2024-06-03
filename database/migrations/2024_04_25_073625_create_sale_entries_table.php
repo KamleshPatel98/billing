@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('sale_entries', function (Blueprint $table) {
             $table->id();
             $table->date('sale_date');
-            $table->integer('sale_id')->default(0);
             $table->bigInteger('customer_id')->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->timestamps();
