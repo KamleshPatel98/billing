@@ -31,13 +31,12 @@ class SaleEntryController extends Controller
     public function saleEntryDetails()
     {
         $sale_entries=DB::table('sale_entries')
-            ->join('sale_item_entries','sale_entries.bill_no','sale_item_entries.bill_no')
-            ->join('customers','sale_item_entries.customer_id','customers.id')
-            ->select('sale_entries.sale_date as sale_date',
-                'sale_item_entries.totalPrice as totalPrice',
-                'sale_item_entries.bill_no as bill_no',
-                'customers.cust_name as cust_name')
-            ->groupBy('sale_item_entries.bill_no')         
+            ->join('customers','sale_entries.customer_id','customers.id')
+            ->join('sale_item_entries','sale_entries.id','sale_item_entries.sale_id')
+            ->select('sale_date',
+                'sale_id',
+                'cust_name')
+            ->groupBy('sale_item_entries.sale_id')     
             ->paginate(10);
         return view('sale.saleEntryDetails',compact('sale_entries'));
     }
@@ -48,10 +47,9 @@ class SaleEntryController extends Controller
     public function addSaleEntry(Request $request)
     {
         try{
-            SaleEntry::create($request->all());
-            SaleItemEntry::where('bill_no',$request['bill_no'])->update(['sale_item'=>'1']);
+            $data = SaleEntry::create($request->all());
+            SaleItemEntry::where('sale_id',0)->update(['sale_id'=>$data->id]);
             return 200;
-            //return redirect()->back()->with('success','Sale Entry Added Successfully');
         }catch(\Exception $ex){
             return $ex;
         }
