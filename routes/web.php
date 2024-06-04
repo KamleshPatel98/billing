@@ -42,5 +42,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('deleteItem',[SaleItemEntryController::class,'deleteItem'])->name('saleItemEntry.deleteItem');
     
     //Invoice
-    Route::get('sale_invoice/{bill_no}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
+    Route::get('sale_invoice/{sale_id}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
 });
