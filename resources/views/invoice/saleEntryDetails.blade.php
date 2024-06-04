@@ -25,6 +25,13 @@
         .right{
             text-align:right;
         }
+        .spaace_arounnd{
+            display:flex; 
+            justify-content: space-between;"
+        }
+        .mt-2{
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -34,18 +41,20 @@
     </center>
     <div class="container">
         <div class="right">
-            <h4>Name: {{ ucfirst("$customer_name") }}</h4>
+            Date : {{ \Carbon\Carbon::parse($sale_date)->format('d-m-Y') }}
         </div>
-        <table>
+        <div class="right">
+            Name: {{ ucfirst($customer_name) }}
+        </div>
+        <table class="mt-2">
             <thead>
                 <tr>
                     <th>SN.</th>
-                    <th>Sale Date</th>
                     <th>Item name</th>
                     <th>Unit Name</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Total Price</th>
+                    <th class="right">Qty</th>
+                    <th class="right">Price</th>
+                    <th class="right">Total Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,12 +64,11 @@
                 @foreach($sale_entries as $row)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $row->sale_date }}</td>
                         <td>{{ $row->item_name }}</td>
                         <td>{{ $row->unit_name }}</td>
-                        <td>{{ $row->qty }}</td>
-                        <td>{{ $row->price }}</td>
-                        <td>{{ $row->totalPrice }}</td>
+                        <td class="right">{{ $row->qty }}</td>
+                        <td class="right">{{ $row->price }}</td>
+                        <td class="right">{{ $row->totalPrice }}</td>
                     </tr>
                     @php
                         $amount += $row->totalPrice;
@@ -69,7 +77,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="7" class="right">Total Price: {{ $amount }}</th>
+                    <th colspan="6" class="right">Total Price: {{ $amount }}</th>
                 </tr>
             </tfoot>
         </table>
