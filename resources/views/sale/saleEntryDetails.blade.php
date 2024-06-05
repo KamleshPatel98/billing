@@ -6,6 +6,7 @@
             <div class="card-header bg-success">
                 <h5>Sale Entry Details</h5>
             </div>
+            <x-alert></x-alert>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
@@ -26,7 +27,25 @@
                                     <td>{{ \Carbon\Carbon::parse($row->sale_date)->format('d-m-Y') }}</td>
                                     <td>{{ $row->sale_id }}</td>
                                     <td>
-                                        <a href="{{ route('invoice.sale_invoice',$row->sale_id) }}" class="btn btn-sm btn-secondary">View</a>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="mr-2">
+                                                <a href="{{ route('invoice.sale_invoice',$row->sale_id) }}" class="btn btn-sm btn-secondary">View</a>
+                                            </div>
+                                            <div class="mr-2">
+                                                <a href="{{ route('editSaleEntry',$row->sale_id)}}" class="btn btn-sm btn-secondary text-light" rel="tooltip">
+                                                    Edit
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <form action="{{ route('deleteSaleEntry',$row->sale_id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to Delete?')">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

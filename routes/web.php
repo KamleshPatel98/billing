@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('party',PartyController::class);
     Route::resource('saleEntry',SaleEntryController::class);
     Route::get('addSaleEntry',[SaleEntryController::class,'addSaleEntry'])->name('addSaleEntry');
+    Route::get('editSaleEntry/{id}',[SaleEntryController::class,'editSaleEntry'])->name('editSaleEntry');
+    Route::delete('deleteSaleEntry/{id}',[SaleEntryController::class,'destroy'])->name('deleteSaleEntry');
     Route::get('saleEntryDetails',[SaleEntryController::class,'saleEntryDetails'])->name('saleEntry.saleEntryDetails');
     Route::resource('saleItemEntry',SaleItemEntryController::class);
     Route::get('storeSaleLowerEntry',[SaleItemEntryController::class,'storeSaleLowerEntry'])->name('storeSaleLowerEntry');

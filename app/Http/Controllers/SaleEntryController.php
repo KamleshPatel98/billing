@@ -66,9 +66,16 @@ class SaleEntryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SaleEntry $saleEntry)
+    public function editSaleEntry($id)
     {
-        //
+        $customers=Customer::all();
+        $items=Item::all();
+        $units=Unit::all();
+        $saleEntries=DB::table('sale_entries')
+            ->join('sale_item_entries','sale_entries.id','sale_item_entries.sale_id')
+            ->where('sale_entries.id',$id)
+            ->get();
+        return view('sale.editSaleEntry',compact('customers','saleEntries','items','units'));
     }
 
     /**
@@ -82,8 +89,10 @@ class SaleEntryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SaleEntry $saleEntry)
+    public function destroy($id)
     {
-        //
+        SaleEntry::where('id',$id)->delete();
+        SaleItemEntry::where('sale_id',$id)->delete();
+        return back()->with('success','Sale Entry Deleted Successfully!');
     }
 }
