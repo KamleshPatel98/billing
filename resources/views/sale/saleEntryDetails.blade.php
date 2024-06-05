@@ -6,6 +6,7 @@
             <div class="card-header bg-success">
                 <h5>Sale Entry Details</h5>
             </div>
+            <x-alert></x-alert>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
@@ -14,7 +15,7 @@
                                 <th>SNo.</th>
                                 <th>Customer</th>
                                 <th>Sale Date</th>
-                                <th>TotalAmount</th>
+                                <th>Sale id</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -23,10 +24,28 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->cust_name }}</td>
-                                    <td>{{ $row->sale_date }}</td>
-                                    <td>{{ $row->totalPrice }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($row->sale_date)->format('d-m-Y') }}</td>
+                                    <td>{{ $row->sale_id }}</td>
                                     <td>
-                                        <a href="{{ route('invoice.sale_invoice',$row->bill_no) }}" class="btn btn-sm btn-secondary">View</a>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="mr-2">
+                                                <a href="{{ route('invoice.sale_invoice',$row->sale_id) }}" class="btn btn-sm btn-secondary">View</a>
+                                            </div>
+                                            <div class="mr-2">
+                                                <a href="{{ route('editSaleEntry',$row->sale_id)}}" class="btn btn-sm btn-secondary text-light" rel="tooltip">
+                                                    Edit
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <form action="{{ route('deleteSaleEntry',$row->sale_id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to Delete?')">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

@@ -1,6 +1,11 @@
 @extends('layout.masters')
 
 @section('content')
+    @if(isset($saleEntries))
+        @foreach ($saleEntries as $row1)
+            
+        @endforeach
+    @endif
     <div class="container">
         <div class="card mt-2">
             <div class="card-header bg-success">
@@ -10,18 +15,18 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="" class="form-label">Date</label><br>
-                        <input type="date" id="sale_date" value="{{ date('Y-m-d') }}" class="form-control">
+                        <input type="date" id="sale_date" value="{{ $row1->sale_date }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Bill No.</label><br>
-                        <input type="number"  id="sale_id" value="{{ $billNo }}" readonly class="form-control">
+                        <input type="number"  id="sale_id" value="{{ $row1->id }}" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Customer <span class="text-danger">*</span></label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
                         <select  id="customer_id" class="form-control chosen" style="height:20px;">
                             <option value="">Select</option>
                             @foreach ($customers as $row)
-                                <option value="{{ $row->id }}">{{ $row->cust_name }}</option>
+                                <option value="{{ $row->id }}" {{ $row->id == $row1->customer_id ? 'selected' : '' }}>{{ $row->cust_name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -189,7 +194,7 @@
         function getData(){
             $.ajax({
                 type:"GET",
-                url:"{{ route('saleItemEntry.index') }}",
+                url:"{{ route('saleItemEntry.editEntry') }}",
                 success:function(data){
                     $("#saleLowertable").html(data);
                 }

@@ -34,6 +34,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('party',PartyController::class);
     Route::resource('saleEntry',SaleEntryController::class);
     Route::get('addSaleEntry',[SaleEntryController::class,'addSaleEntry'])->name('addSaleEntry');
+    Route::get('editSaleEntry/{id}',[SaleEntryController::class,'editSaleEntry'])->name('editSaleEntry');
+    Route::delete('deleteSaleEntry/{id}',[SaleEntryController::class,'destroy'])->name('deleteSaleEntry');
     Route::get('saleEntryDetails',[SaleEntryController::class,'saleEntryDetails'])->name('saleEntry.saleEntryDetails');
     Route::resource('saleItemEntry',SaleItemEntryController::class);
     Route::get('storeSaleLowerEntry',[SaleItemEntryController::class,'storeSaleLowerEntry'])->name('storeSaleLowerEntry');
@@ -42,5 +44,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('deleteItem',[SaleItemEntryController::class,'deleteItem'])->name('saleItemEntry.deleteItem');
     
     //Invoice
-    Route::get('sale_invoice/{bill_no}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
+    Route::get('sale_invoice/{sale_id}',[InvoiceController::class,'sale_invoice'])->name('invoice.sale_invoice');
 });
