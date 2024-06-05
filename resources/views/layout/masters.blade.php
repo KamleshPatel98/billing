@@ -284,6 +284,26 @@
                 </ul>
               </li>
               <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-edit"></i>
+                  <p>
+                    Puchase
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('purchaseEntry') }}" class="nav-link">
+                      <i class="nav-icon fas fa-table"></i>
+                      <p>
+                        Purchase Entry
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
