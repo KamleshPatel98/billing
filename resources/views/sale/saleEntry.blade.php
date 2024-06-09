@@ -198,14 +198,15 @@
         getData();
 
         function addSaleEntry(){
+            var sale_id=$('#sale_id').val();
             var sale_date=$('#sale_date').val();
             var customer_id=$('#customer_id').val();
-            
+            var total_amount=$('#total_amount').val();
             $.ajax({
                 type: "GET",
                 url: "{{ route('addSaleEntry') }}",
                 data: {
-                    'sale_date':sale_date,'customer_id':customer_id,
+                    'sale_date':sale_date,'customer_id':customer_id,'total_amount':total_amount,
                 },
                 dataType: "json",
                 success: function (response) {
