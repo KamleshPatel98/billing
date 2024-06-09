@@ -12,14 +12,17 @@ class SaleItemEntryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $salesItems=SaleItemEntry::with('item','unit')->where('sale_id','0')->get();
-        
+        if(!empty($request['sale_id'])){
+            $salesItems=SaleItemEntry::with('item','unit')->where('sale_id',$request['sale_id'])->get();
+            $grandTotal=SaleItemEntry::where('sale_id',$request['sale_id'])->sum('totalPrice');
+        }else{
+            $salesItems=SaleItemEntry::with('item','unit')->where('sale_id','0')->get();
+            $grandTotal=SaleItemEntry::where('sale_id',0)->sum('totalPrice');
+        }
         $html = '';
-        
         foreach ($salesItems as $row) {
-            
             $html .='
                 <tr>
                     <td>'.$row->id.'</td>
@@ -40,16 +43,11 @@ class SaleItemEntryController extends Controller
                 </div></td>
                 </tr>
             ';
-            
         }
-
-        
-        //$grandtotal=0;
-        $grandTotal=SaleItemEntry::where('sale_id','0')->sum('totalPrice');
-    
         $html .='
                 <tr>
-                    <th colspan="7">Total Amount :'.$grandTotal.'</th>
+                    <th colspan="7">Total Amount :'.$grandTotal.' <input type="text" id="total_amount" value="'.$grandTotal.'"></th>
+                    
                 </tr>
             ';
         return $html;
