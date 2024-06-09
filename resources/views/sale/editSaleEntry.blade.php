@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Bill No.</label><br>
-                        <input type="number"  id="sale_id" value="{{ $row1->id }}" readonly class="form-control">
+                        <input type="number"  id="sale_id" value="{{ $row1->sale_id }}" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Customer <span class="text-danger">*</span></label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
@@ -192,9 +192,14 @@
         }
 
         function getData(){
+            var sale_id=$('#sale_id').val();
+            alert(sale_id);
             $.ajax({
                 type:"GET",
-                url:"{{ route('saleItemEntry.editEntry') }}",
+                url:"{{ route('saleItemEntry.index') }}",
+                data: {
+                    'sale_id':sale_id,
+                },
                 success:function(data){
                     $("#saleLowertable").html(data);
                 }
@@ -205,25 +210,47 @@
         function addSaleEntry(){
             var sale_date=$('#sale_date').val();
             var customer_id=$('#customer_id').val();
-            
-            $.ajax({
-                type: "GET",
-                url: "{{ route('addSaleEntry') }}",
-                data: {
-                    'sale_date':sale_date,'customer_id':customer_id,
-                },
-                dataType: "json",
-                success: function (response) {
-                    console.log(response);
-                    if(response==200){
-                        alert('Sale Entry Added Successfully!');
-                        location.reload();
-                    }else{
-                        alertify.set('notifier','position', 'top-right');
-                        alertify.error('Item Is Not Added!');
+            var total_amount=$('#total_amount').val();
+            var sale_id=$('#sale_id').val();
+            if(sale_id != ''){
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('updateSaleEntry') }}",
+                    data: {
+                        'total_amount':total_amount,'id':sale_id
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if(response==200){
+                            alert('Sale Entry Updated Successfully!');
+                            location.reload();
+                        }else{
+                            alertify.set('notifier','position', 'top-right');
+                            alertify.error('Item Is Not Updated!');
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('addSaleEntry') }}",
+                    data: {
+                        'sale_date':sale_date,'customer_id':customer_id,'total_amount':total_amount,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if(response==200){
+                            alert('Sale Entry Added Successfully!');
+                            location.reload();
+                        }else{
+                            alertify.set('notifier','position', 'top-right');
+                            alertify.error('Item Is Not Added!');
+                        }
+                    }
+                });
+            }
         }
 
         //Edit Item
