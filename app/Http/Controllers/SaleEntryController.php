@@ -81,9 +81,10 @@ class SaleEntryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SaleEntry $saleEntry)
+    public function updateSaleEntry(Request $request, SaleEntry $saleEntry)
     {
-        //
+        SaleEntry::where('id',$request['id'])->update(['total_amount'=>$request['total_amount']]);
+        return 200;
     }
 
     /**
