@@ -39,8 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('storePurchaseLowerEntry',[PurchaseController::class,'storePurchaseLowerEntry'])->name('storePurchaseLowerEntry');
     Route::get('purchase',[PurchaseController::class,'index'])->name('purchase.index');
   
-  Route::resource('saleEntry',SaleEntryController::class);
+    Route::resource('saleEntry',SaleEntryController::class);
     Route::get('addSaleEntry',[SaleEntryController::class,'addSaleEntry'])->name('addSaleEntry');
+    Route::get('updateSaleEntry',[SaleEntryController::class,'updateSaleEntry'])->name('updateSaleEntry');
     Route::get('editSaleEntry/{id}',[SaleEntryController::class,'editSaleEntry'])->name('editSaleEntry');
     Route::delete('deleteSaleEntry/{id}',[SaleEntryController::class,'destroy'])->name('deleteSaleEntry');
     Route::get('saleEntryDetails',[SaleEntryController::class,'saleEntryDetails'])->name('saleEntry.saleEntryDetails');
