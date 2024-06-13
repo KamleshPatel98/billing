@@ -9,6 +9,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\SaleEntryController;
 use App\Http\Controllers\SaleItemEntryController;
 use App\Http\Controllers\InvoiceController;
@@ -36,8 +37,13 @@ Route::middleware(['auth'])->group(function () {
   
   //Purchase Route
     Route::get('purchaseEntry',[PurchaseController::class,'purchaseEntry'])->name('purchaseEntry');
-    Route::get('storePurchaseLowerEntry',[PurchaseController::class,'storePurchaseLowerEntry'])->name('storePurchaseLowerEntry');
     Route::get('purchase',[PurchaseController::class,'index'])->name('purchase.index');
+    Route::get('storePurchase',[PurchaseController::class,'storePurchase'])->name('storePurchase');
+    Route::resource('purchase_item',PurchaseItemController::class);
+    Route::get('storePurchaseLowerEntry',[PurchaseItemController::class,'storePurchaseLowerEntry'])->name('storePurchaseLowerEntry');
+    Route::get('editPurchaseItem',[PurchaseItemController::class,'editPurchaseItem'])->name('editPurchaseItem');
+    Route::get('updatePurchaseItem',[PurchaseItemController::class,'updatePurchaseItem'])->name('updatePurchaseItem');
+    Route::get('deletePurchaseItem',[PurchaseItemController::class,'deletePurchaseItem'])->name('deletePurchaseItem');
   
     Route::resource('saleEntry',SaleEntryController::class);
     Route::get('addSaleEntry',[SaleEntryController::class,'addSaleEntry'])->name('addSaleEntry');

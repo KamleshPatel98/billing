@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use App\Models\Customer;
 use App\Models\Unit;
 use App\Models\Item;
@@ -27,28 +28,20 @@ class PurchaseController extends Controller
         $items=Item::all();
         $units=Unit::all();
         $purchase=Purchase::count();
-        $bill_no= $purchase + 1;
-        return view('purchase.add',compact('customers','items','units','bill_no'));
+        $sale_id= $purchase + 1;
+        return view('purchase.add',compact('customers','items','units','sale_id'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function storePurchaseLowerEntry(Request $request)
-    {
-        try {
-            $request->validate(['bill_no'=>'required',
-                'item_id'=>'required',
-                'unit_id'=>'required',
-                'bill_no'=>'required',
-                'price'=>'required',
-                'qty'=>'required',
-                'totalAmount'=>'required']);
-            Purchase::create($request->all());
-            return 200;
-        } catch (\Exception $ex) {
-            return $ex;
-        }
+    public function storePurchase(Request $request){
+        $request->validate(['purchase_date'=>'required|date',
+            'customer_id'=>'required',
+            'purchase_total_amount'=>'required']);
+        $data=Purchase::create($request->all());
+        PurchaseItem::where('purchase_id',0)->update(['purchase_id'=>$data->id]);
+        return 200;
     }
 
     /**

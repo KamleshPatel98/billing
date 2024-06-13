@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('puchase_items', function (Blueprint $table) {
+        Schema::create('purchase_items', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')->on('items')->references('id')->onDelete('cascade');
             $table->bigInteger('unit_id')->unsigned();
             $table->foreign('unit_id')->on('units')->references('id')->onDelete('cascade');
+            $table->integer('purchase_id')->default(0);
             $table->integer('qty');
-            $table->double('price,16,2');
+            $table->double('price',16,2);
             $table->integer('totalAmount');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('puchase_items');
+        Schema::dropIfExists('purchase_items');
     }
 };

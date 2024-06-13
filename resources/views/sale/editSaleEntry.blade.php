@@ -193,7 +193,7 @@
 
         function getData(){
             var sale_id=$('#sale_id').val();
-            alert(sale_id);
+            //alert(sale_id);
             $.ajax({
                 type:"GET",
                 url:"{{ route('saleItemEntry.index') }}",

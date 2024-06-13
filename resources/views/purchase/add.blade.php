@@ -10,11 +10,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="" class="form-label">Date</label><br>
-                        <input type="date" id="sale_date" value="{{ date('Y-m-d') }}" class="form-control">
+                        <input type="date" id="purchase_date" value="{{ date('Y-m-d') }}" class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Bill No.</label><br>
-                        <input type="number"  id="bill_no" value="{{ $bill_no }}" readonly class="form-control">
+                        <input type="number"  id="purchase_id" value="" readonly class="form-control">
                     </div>
                     <div class="col-md-4">
                         <label for="" class="form-label">Customer <span class="text-danger">*</span></label> <a href="{{ route('customer.create') }}" class="p-1">+</a><br>
@@ -59,11 +59,11 @@
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label">Qty <span class="text-danger">*</span></label><br>
-                        <input type="number"  id="qty" value=""  class="form-control" onclick="getQty();">
+                        <input type="number"  id="qty" value=""  class="form-control" onchange="getQty();">
                     </div>
                     <div class="col-md-2">
                         <label for="" class="form-label">Amount <span class="text-danger">*</span></label><br>
-                        <input type="number"  id="totalPrice" value="" class="form-control">
+                        <input type="number"  id="totalAmount" value="" class="form-control">
                     </div>
                     <input type="hidden" id="id">
                     <div class="col-md-2">
@@ -92,7 +92,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="saleLowertable">
+                        <tbody id="purchase_lower_table">
                             
                         </tbody>
                     </table>
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="text-center mt-5">
-            <button class="btn btn-sm btn-primary" type="submit" onclick="addSaleEntry();">Submit</button>
+            <button class="btn btn-sm btn-primary" type="submit" onclick="addPurchaseEntry();">Submit</button>
         </div>
     </div>
 @endsection
@@ -109,21 +109,18 @@
         function getQty(){
             var price=$('#price').val();
             var qty=$('#qty').val();
-            var totalPrice=price*qty;
-            $('#totalPrice').val(totalPrice);
-            //alert(item_id);
+            var totalAmount=price*qty;
+            $('#totalAmount').val(totalAmount);
         }
 
         function addItem(){
             var id=$('#id').val();
             var item_id=$('#item_id').val();
-            var customer_id=$('#customer_id').val();
-            var bill_no=$('#bill_no').val();
             var unit_id=$('#unit_id').val();
             var price=$('#price').val();
             var qty=$('#qty').val();
-            var totalPrice=$('#totalPrice').val();
-            if(item_id=='' || customer_id=='' || bill_no=='' || unit_id=='' || price=='' || qty=='' || totalPrice==''){
+            var totalAmount=$('#totalAmount').val();
+            if(item_id=='' || unit_id=='' || price=='' || qty=='' || totalAmount==''){
                 alert('All field is required!');
                 return false;
             }
@@ -131,9 +128,9 @@
                 //update item route('purchaseItemEntry.updateItem')
                 $.ajax({
                     type: "GET",
-                    url: ",
+                    url: "{{ route('updatePurchaseItem') }}",
                     data:  {
-                        'id':id,'item_id':item_id,'customer_id':customer_id,'bill_no':bill_no,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
+                        'id':id,'item_id':item_id,'unit_id':unit_id,'price':price,'qty':qty,'totalAmount':totalAmount,
                     },
                 dataType: "json",
                     success: function (response) {
@@ -141,17 +138,17 @@
                             getData();
                             // $('#item_id').html('');
                             // $('#customer_id').html('');
-                            // $('#bill_no').html('');
+                            // $('#purchase_total_amount').html('');
                             // $('#unit_id').html('');
                             $('#price').val('');
                             $('#qty').val('');
-                            $('#totalPrice').val('');
+                            $('#totalAmount').val('');
                             $('#id').val('');
                             alertify.set('notifier','position', 'top-right');
-                            alertify.success('Item Updated Successfully!');
+                            alertify.success('Purchase Item Updated Successfully!');
                         }else{
                             alertify.set('notifier','position', 'top-right');
-                            alertify.error('Item Is Not Updated!');
+                            alertify.error('Purchase Item Is Not Updated!');
                         }
                     }
                 });
@@ -161,7 +158,7 @@
                 type: "GET",
                 url: "{{ route('storePurchaseLowerEntry') }}",
                 data: {
-                    'item_id':item_id,'customer_id':customer_id,'bill_no':bill_no,'unit_id':unit_id,'price':price,'qty':qty,'totalPrice':totalPrice,
+                    'item_id':item_id,'unit_id':unit_id,'price':price,'qty':qty,'totalAmount':totalAmount,
                 },
                 dataType: "json",
                 success: function (response) {
@@ -169,56 +166,61 @@
                         getData();
                         // $('#item_id').html('');
                         // $('#customer_id').html('');
-                        // $('#bill_no').html('');
+                        // $('#purchase_total_amount').html('');
                         // $('#unit_id').html('');
                         $('#price').val('');
                         $('#qty').val('');
-                        $('#totalPrice').val('');
+                        $('#totalAmount').val('');
                         $('#id').val('');
                         alertify.set('notifier','position', 'top-right');
-                        alertify.success('Item Added Successfully!');
+                        alertify.success('Purchase Item Added Successfully!');
                     }else{
                         alertify.set('notifier','position', 'top-right');
-                        alertify.error('Item Is Not Added!');
+                        alertify.error('Purchase Item Is Not Added!');
                     }
                 }
             });
             }
         }
-
+    </script>
+    <script>
+        
         //Fetch Lower Table Data
         function getData(){
             $.ajax({
                 type:"GET",
-                url:"{{ route('purchase.index') }}",
+                url:"{{ route('purchase_item.index') }}",
                 success:function(data){
-                    $("#saleLowertable").html(data);
+                    $("#purchase_lower_table").html(data);
                 }
             });
         }
         getData();
 
-        //Add Puchase Entry route('addSaleEntry')
-        function addSaleEntry(){
-            var sale_date=$('#sale_date').val();
+        //Add Puchase Entry route('addPurchaseEntry')
+        function addPurchaseEntry(){
+            var purchase_date=$('#purchase_date').val();
             var customer_id=$('#customer_id').val();
-            var bill_no=$('#bill_no').val();
-
+            var purchase_total_amount=$('#purchase_total_amount').val();
+            if(purchase_date=='' || customer_id=='' || purchase_total_amount==''){
+                alert('All field is required!');
+                return false;
+            }
             $.ajax({
                 type: "GET",
-                url: "",
+                url: "{{ route('storePurchase') }}",
                 data: {
-                    'sale_date':sale_date,'customer_id':customer_id,'bill_no':bill_no,
+                    'purchase_date':purchase_date,'customer_id':customer_id,'purchase_total_amount':purchase_total_amount,
                 },
                 dataType: "json",
                 success: function (response) {
                     console.log(response);
                     if(response==200){
-                        alert('Sale Entry Added Successfully!');
+                        alert('Purchase Entry Added Successfully!');
                         location.reload();
                     }else{
                         alertify.set('notifier','position', 'top-right');
-                        alertify.error('Item Is Not Added!');
+                        alertify.error('Purchase Is Not Added!');
                     }
                 }
             });
@@ -227,10 +229,9 @@
         //Edit Item route('saleItemEntry.editItem') 
         $(document).on('click','.edit',function(){
             var id = $(this).val();
-            alert(id);
             $.ajax({
                 type: "GET",
-                url: "",
+                url: "{{ route('editPurchaseItem') }}",
                 data: {
                     'id':id,
                 },
@@ -240,15 +241,11 @@
                     $.each(response, function (key, value) { 
                         $('#id').val(value['id']);
                         $('#item_id').val(value['item_id']);
-                        $('#customer_id').val(value['customer_id']);
-                        $('#bill_no').val(value['bill_no']);
                         $('#unit_id').val(value['unit_id']);
                         $('#price').val(value['price']);
                         $('#qty').val(value['qty']);
-                        $('#totalPrice').val(value['totalPrice']);
+                        $('#totalAmount').val(value['totalAmount']);
                     });
-                    // $('#price').val('');
-                    // $('#price').val(response.price);
                 }
             });
         })
@@ -258,11 +255,11 @@
             var id = $(this).val();
             $.ajax({
                 type: "GET",
-                url: "",
+                url: "{{ route('deletePurchaseItem') }}",
                 data: {
                     'id':id,
                 },
-                dataType: "html",
+                dataType: "json",
                 success: function (response) {
                     if(response==200){
                         getData();
